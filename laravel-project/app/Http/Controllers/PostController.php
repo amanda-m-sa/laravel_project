@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
@@ -12,7 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::get();
+        return view('posts', ["posts" => $posts->toArray()]);
     }
 
     /**
@@ -20,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post-new');
     }
 
     /**
@@ -28,7 +30,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newPost = Post::create($request->all());
+        return Redirect::to(url('posts'));
     }
 
     /**
@@ -36,7 +39,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post;
     }
 
     /**
@@ -44,7 +47,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $updatePost = $post->fresh();
+        return view('post-edit', ["post" => $updatePost]);
     }
 
     /**
@@ -52,7 +56,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->update($request->all());
+        $post->fresh();
+        return Redirect::to(url('posts'));
     }
 
     /**
@@ -60,6 +66,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return Redirect::to(url('posts'));
     }
 }
