@@ -1,3 +1,8 @@
+@extends('layouts.app')
+@section('title', 'Listagem de Posts')
+@section('header', 'Gerenciando Postagens')
+@section('content')
+
 <div>
     <!-- The only way to do great work is to love what you do. - Steve Jobs -->
     <h1>Posts</h1>
